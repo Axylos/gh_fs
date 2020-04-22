@@ -1,0 +1,19 @@
+[package]
+name = "gh_fs"
+version = "0.1.0"
+authors = ["Drake Talley <robertdraketalley@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+vfs_service = "0.0.1"
+fuse = "0.3.1"
+reqwest = "0.9.19"
+log = "0.4.4"
+syslog = "4.0.1"
+time = "0.1.38"
+libc = "0.2.60"
+serde_json = "0.9.0"
+serde = "1.0.98"
+dotenv = "0.14.1" 
