@@ -1,7 +1,7 @@
-use std::fmt;
 use reqwest;
 use serde::Deserialize;
-use vfs_service::{SingleService};
+use std::fmt;
+use vfs_service::SingleService;
 extern crate dotenv;
 
 use dotenv::dotenv;
@@ -14,37 +14,40 @@ pub struct Repo {
     events_url: String,
     statuses_url: String,
     git_commits_url: String,
-    description: Option<String>
+    description: Option<String>,
 }
-
 
 #[derive(Debug, Deserialize)]
 pub struct Github {
-    pub repos: Vec<Repo>
+    pub repos: Vec<Repo>,
 }
 
 impl fmt::Display for Repo {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Name: {}\nUrl: Description: {:?},\nEvents Url: {}\nStatuses Url: {}", self.name, self.description, self.events_url, self.statuses_url)
+        write!(
+            f,
+            "Name: {}\nUrl: Description: {:?},\nEvents Url: {}\nStatuses Url: {}",
+            self.name, self.description, self.events_url, self.statuses_url
+        )
     }
 }
 
 impl fmt::Display for Github {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let data = self.repos
+        let data = self
+            .repos
             .clone()
             .into_iter()
             .map(|repo| repo.to_string())
-            .collect::<Vec<String>>().join("\n\n");
-            
-            
+            .collect::<Vec<String>>()
+            .join("\n\n");
+
         write!(f, "{}", data)
     }
 }
 pub struct GithubService {}
 
-impl SingleService for GithubService  {
-
+impl SingleService for GithubService {
     fn get_name(&self) -> String {
         "github_users".to_string()
     }
@@ -53,20 +56,15 @@ impl SingleService for GithubService  {
         dotenv().ok();
         let username = match query {
             Some(q) => q,
-            None => "torvalds"
+            None => "torvalds",
         };
 
-        let url= format!("https://api.github.com/users/{}/repos", username);
+        let url = format!("https://api.github.com/users/{}/repos", username);
 
-        let data: Vec<Repo> = reqwest::get(&url)
-            .unwrap()
-            .json()
-            .unwrap();
+        let data: Vec<Repo> = reqwest::get(&url).unwrap().json().unwrap();
 
-        let gh = Github {
-            repos: data
-        };
+        let gh = Github { repos: data };
 
-        vec!(gh.to_string())
+        vec![gh.to_string()]
     }
 }
