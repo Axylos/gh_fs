@@ -1546,9 +1546,9 @@ checksum = "078775d0255232fb988e6fccf26ddc9d1ac274299aaedcedce21c6f72cc533ce"
 
 [[package]]
 name = "vfs_service"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9376e5f9a1ce7be78eee5bcbafe3be513c8c4a3fc393cab36618cc730159583"
+checksum = "a0ee0a30bed392f273c3610c60a95ecb0b6d82375d57ece16badb3ecedb6379d"
 dependencies = [
  "dotenv",
  "file_node",
